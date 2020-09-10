@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+}
+
+#wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: -webkit-gradient(linear, left top, right top, from(#ffcbf2), color-stop(50%, #e5b3fe), to(#c0fdff));
+  background: linear-gradient(90deg, #ffcbf2 0%, #e5b3fe 50%, #c0fdff 100%);
+}
+
+#wrapper .calc-wrapper {
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  border: solid 2px black;
+  border-radius: 3px;
+  padding: 1rem;
+  position: relative;
+}
+
+#wrapper .calc-wrapper #display {
+  width: 100%;
+  height: 100px;
+  background-color: lightgray;
+  border: solid 1px darkgray;
+}
+
+#wrapper .calc-wrapper #digits {
+  margin-top: 5px;
+  width: 100%;
+  height: calc(100% - 105px);
+  cursor: pointer;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.5em;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#wrapper .calc-wrapper #digits .grid {
+  text-align: center;
+  padding: 20px 0;
+  border: solid 1px gray;
+  background-color: lightblue;
+  border-radius: 3px;
+}
+
+#wrapper .calc-wrapper #digits .plus,
+#wrapper .calc-wrapper #digits .minus,
+#wrapper .calc-wrapper #digits .multiply,
+#wrapper .calc-wrapper #digits .divide,
+#wrapper .calc-wrapper #digits .equal {
+  background-color: coral;
+}
+/*# sourceMappingURL=style.css.map */
