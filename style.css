@@ -24,8 +24,7 @@ body {
 #wrapper .calc-wrapper {
   width: 300px;
   height: 400px;
-  background-color: white;
-  border: solid 2px black;
+  background-color: black;
   border-radius: 3px;
   padding: 1rem;
   position: relative;
@@ -63,11 +62,23 @@ body {
   border-radius: 3px;
 }
 
+#wrapper .calc-wrapper #digits .grid:hover {
+  background-color: gray;
+}
+
 #wrapper .calc-wrapper #digits .plus,
 #wrapper .calc-wrapper #digits .minus,
 #wrapper .calc-wrapper #digits .multiply,
 #wrapper .calc-wrapper #digits .divide,
 #wrapper .calc-wrapper #digits .equal {
   background-color: coral;
+}
+
+#wrapper .calc-wrapper #digits .plus:hover,
+#wrapper .calc-wrapper #digits .minus:hover,
+#wrapper .calc-wrapper #digits .multiply:hover,
+#wrapper .calc-wrapper #digits .divide:hover,
+#wrapper .calc-wrapper #digits .equal:hover {
+  background-color: lightcoral;
 }
 /*# sourceMappingURL=style.css.map */
