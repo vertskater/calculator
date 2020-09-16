@@ -76,19 +76,11 @@ body {
   background-color: gray;
 }
 
-#wrapper .calc-wrapper #digits .plus,
-#wrapper .calc-wrapper #digits .minus,
-#wrapper .calc-wrapper #digits .multiply,
-#wrapper .calc-wrapper #digits .divide,
-#wrapper .calc-wrapper #digits .equal {
+#wrapper .calc-wrapper #digits .operator {
   background-color: coral;
 }
 
-#wrapper .calc-wrapper #digits .plus:hover,
-#wrapper .calc-wrapper #digits .minus:hover,
-#wrapper .calc-wrapper #digits .multiply:hover,
-#wrapper .calc-wrapper #digits .divide:hover,
-#wrapper .calc-wrapper #digits .equal:hover {
+#wrapper .calc-wrapper #digits .operator:hover {
   background-color: lightcoral;
 }
 /*# sourceMappingURL=style.css.map */
