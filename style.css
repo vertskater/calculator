@@ -23,7 +23,7 @@ body {
 
 #wrapper .calc-wrapper {
   width: 300px;
-  height: 400px;
+  height: 460px;
   background-color: black;
   border-radius: 3px;
   padding: 1rem;
@@ -76,11 +76,22 @@ body {
   background-color: gray;
 }
 
+#wrapper .calc-wrapper #digits .is-pressed {
+  background-color: black;
+}
+
 #wrapper .calc-wrapper #digits .operator {
   background-color: coral;
 }
 
 #wrapper .calc-wrapper #digits .operator:hover {
   background-color: lightcoral;
+}
+
+#wrapper .calc-wrapper #digits .equal {
+  background-color: burlywood;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 5;
 }
 /*# sourceMappingURL=style.css.map */

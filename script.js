@@ -2,85 +2,108 @@
 
 class Calculator {
     constructor() {
-        this.display = document.getElementById('display');
-        this.digits = document.querySelectorAll('.number');
-        this.operators = document.querySelectorAll('.operator');
-        this.displayValues = [];
-        this.displayValue = "";
-        this.operatorMath = "";
-        this.result = 0;
-        this.populateDisplay();
-        this.compute();
+        this.displayValue = '0';
+        this.firstNumber = null;
+        this.waitingForsecondNumber = false;
+        this.operator = null;
+        this.keys = document.querySelector('#digits');
+        this.display = document.querySelector('#display');
+        this.updateDisplay();
+        this.listenToKeys();
     }
-
-    operate(values, operator) {
-        if (operator == '+') {
-            this.result = parseInt(values[0]) + parseInt(values[1]);
-            this.display.textContent = this.result + this.operatorMath;
-            this.displayValues = [];
-            this.displayValue = "";
-            this.displayValues.push(this.result);
-            console.log(this.displayValues);
-        } else if (operator == '-') {
-            this.result = parseInt(values[0]) - parseInt(values[1]);
-            this.display.textContent = this.result + this.operatorMath;;
-            this.displayValues = [];
-            this.displayValue = "";
-            this.displayValues.push(this.result);
-        } else if (operator == '*') {
-            this.result = parseInt(values[0]) * parseInt(values[1]);
-            this.display.textContent = this.result + this.operatorMath;;
-            this.displayValues = [];
-            this.displayValue = "";
-            this.displayValues.push(this.result);
+    inputDigits(digit) {
+        if (this.waitingForsecondNumber === true) {
+            this.displayValue = digit;
+            this.waitingForsecondNumber = false;
         } else {
-            this.result = parseInt(values[0]) / parseInt(values[1]);
-            this.display.textContent = this.result + this.operatorMath;;
-            this.displayValues = [];
-            this.displayValue = "";
-            this.displayValues.push(this.result);
+            this.displayValue = this.displayValue === '0' ? digit : this.displayValue + digit;
+        }
+        console.info(calc);
+    }
+    inputDecimal(dot) {
+        if(this.waitingForsecondNumber === true){
+            this.displayValue = '0.';
+            this.waitingForsecondNumber = false;
+            return
+        }
+        if (!this.displayValue.includes(dot)) {
+            this.displayValue += dot;
         }
     }
-    compute(){
-        this.operators.forEach(operator =>{
-            operator.addEventListener('click', ()=>{
-                this.operatorMath = operator.getAttribute('data-value');
-                console.log(this.displayValues.length);
-                if(this.displayValues.length == 0){
-                    this.displayValues.push(this.displayValue);
-                    this.result = this.displayValue;
-                    this.displayValue = '';
-                    this.display.textContent = this.result + this.operatorMath;
-                    console.log(this.operatorMath);
-                }else if(this.displayValues.length == 1){
-                    this.displayValues.push(this.displayValue);
-                    this.operate(this.displayValues, this.operatorMath);
-                    // console.log(this.operatorMath);
-                }else if(this.displayValues.length == 2){
-                    this.displayValues.push(this.displayValue);
-                    this.operate(this.displayValues, this.operatorMath);
-                }
-            })
-        })
-    }
-    populateDisplay() {
-        this.digits.forEach(digit => {
-            digit.addEventListener('click', () => {
-                    this.displayValue += digit.getAttribute('data-value');//.push(digit.getAttribute('data-value'));
-                    this.display.textContent += digit.getAttribute('data-value');
-                    console.log(this.displayValue);
+    handleOperator(nextOperator) {
+        const inputValue = parseFloat(this.displayValue);
+        if(this.operator && this.waitingForsecondNumber){
+            this.operator = nextOperator;
+            return
+        }
 
-                    if(digit.getAttribute('data-value') == 'clear'){
-                        this.clearAll();
-                    }
-            });
-        })
+        if (this.firstNumber === null && !isNaN(inputValue)) {
+            this.firstNumber = inputValue;
+        }else if(this.operator){
+            const result = this.calculate(this.firstNumber, inputValue, this.operator);
+            this.displayValue = `${parseFloat(result.toFixed(7))}`;
+            this.firstNumber = result;
+        }
+        this.waitingForsecondNumber = true;
+        this.operator = nextOperator;
+        console.log(calc);
     }
-    clearAll(){
-        this.displayValue = '';
-        this.displayValues = [];
-        this.display.textContent = '';
+    calculate(firstNumber, secondNumber, operator){
+        if(operator === '+'){
+            return firstNumber + secondNumber;
+        }else if(operator === '-'){
+            return firstNumber - secondNumber;
+        }else if(operator === '*'){
+            return firstNumber * secondNumber;
+        }else if(operator === '/'){
+            return firstNumber / secondNumber;
+        }
+        return secondNumber;
+    }
+    updateDisplay() {
+        this.display.textContent = this.displayValue;
+    }
+    resetCalculator(){
+        this.displayValue = '0';
+        this.firstNumber = null;
+        this.waitingForsecondNumber = false;
+        this.operator = null;
+    }
+    listenToKeys() {
+        this.keys.addEventListener('click', (e) => {
+            if (e.target.matches('.grid')) {
+                this.key = e.target;
+                this.action = this.key.dataset.action;
+                this.keyContent = this.key.getAttribute('data-value');
+
+                if (!this.action) {
+                    this.inputDigits(this.keyContent);
+                    this.updateDisplay();
+                }
+
+                if ((this.action === '+') ||
+                    (this.action === '-') ||
+                    (this.action === '*') ||
+                    (this.action === '/') ||
+                    (this.action === '=')) {
+                    this.handleOperator(this.action);
+                    this.updateDisplay();
+                }
+
+                if (this.action == '.') {
+                    console.log('decimal', this.action);
+                    this.inputDecimal(this.action);
+                    this.updateDisplay;
+                }
+                if (this.action == 'clear') {
+                    this.resetCalculator();
+                    this.updateDisplay();
+                }
+
+            }
+        })
     }
 }
 
 let calc = new Calculator();
+
