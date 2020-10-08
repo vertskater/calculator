@@ -18,10 +18,9 @@ class Calculator {
         } else {
             this.displayValue = this.displayValue === '0' ? digit : this.displayValue + digit;
         }
-        console.info(calc);
     }
     inputDecimal(dot) {
-        if(this.waitingForsecondNumber === true){
+        if (this.waitingForsecondNumber === true) {
             this.displayValue = '0.';
             this.waitingForsecondNumber = false;
             return
@@ -32,30 +31,29 @@ class Calculator {
     }
     handleOperator(nextOperator) {
         const inputValue = parseFloat(this.displayValue);
-        if(this.operator && this.waitingForsecondNumber){
+        if (this.operator && this.waitingForsecondNumber) {
             this.operator = nextOperator;
             return
         }
 
         if (this.firstNumber === null && !isNaN(inputValue)) {
             this.firstNumber = inputValue;
-        }else if(this.operator){
+        } else if (this.operator) {
             const result = this.calculate(this.firstNumber, inputValue, this.operator);
             this.displayValue = `${parseFloat(result.toFixed(7))}`;
             this.firstNumber = result;
         }
         this.waitingForsecondNumber = true;
         this.operator = nextOperator;
-        console.log(calc);
     }
-    calculate(firstNumber, secondNumber, operator){
-        if(operator === '+'){
+    calculate(firstNumber, secondNumber, operator) {
+        if (operator === '+') {
             return firstNumber + secondNumber;
-        }else if(operator === '-'){
+        } else if (operator === '-') {
             return firstNumber - secondNumber;
-        }else if(operator === '*'){
+        } else if (operator === '*') {
             return firstNumber * secondNumber;
-        }else if(operator === '/'){
+        } else if (operator === '/') {
             return firstNumber / secondNumber;
         }
         return secondNumber;
@@ -63,7 +61,7 @@ class Calculator {
     updateDisplay() {
         this.display.textContent = this.displayValue;
     }
-    resetCalculator(){
+    resetCalculator() {
         this.displayValue = '0';
         this.firstNumber = null;
         this.waitingForsecondNumber = false;
@@ -91,7 +89,6 @@ class Calculator {
                 }
 
                 if (this.action == '.') {
-                    console.log('decimal', this.action);
                     this.inputDecimal(this.action);
                     this.updateDisplay;
                 }
@@ -103,7 +100,29 @@ class Calculator {
             }
         })
     }
+    listenToKeyboard() {
+        document.addEventListener('keydown', (e) => {
+            const key = e.key
+            if (isFinite(key)) {
+                this.inputDigits(key);
+                this.updateDisplay();
+            }
+            if(key == 'Enter' ){
+                this.handleOperator('=');
+                this.updateDisplay();
+            }
+            if(
+                (key == '-') ||
+                (key == '+') ||
+                (key == '*') ||
+                (key == '/')           
+            ){
+                this.handleOperator(key);
+                this.updateDisplay();
+            }
+        })
+    }
 }
 
 let calc = new Calculator();
-
+calc.listenToKeyboard();
